@@ -13,7 +13,17 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage,
+  serialize: (state) => JSON.stringify(state),
+  deserialize: (state) => {
+    const parsedState = JSON.parse(state);
+    if (parsedState && Array.isArray(parsedState.contacts)) {
+      return parsedState.contacts;
+    }
+    return [];
+  },
 };
+
+
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

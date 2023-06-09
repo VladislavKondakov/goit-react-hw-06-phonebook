@@ -1,14 +1,17 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteContact, setFilter } from "reduce/contactsSlice";
+import { deleteContact } from "reduce/contactsSlice";
+import { setFilter } from "reduce/filterSlice";
 
 const ContactList = () => {
   const contacts = useSelector((state) => state.contacts);
-  const filter = useSelector((state) => state.filter);
+  const filter = useSelector((state) => state.filter); // Access the filter state correctly
+
   const dispatch = useDispatch();
+  console.log(typeof contacts);
 
   const filteredContacts = contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
+    contact.name && contact.name.toLowerCase().includes(filter.toLowerCase())
   );
 
   const handleDelete = (contactId) => {
